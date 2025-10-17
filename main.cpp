@@ -1,4 +1,6 @@
 // main.cpp
+// ГЛАВНАЯ ФУНКЦИЯ - пользовательский интерфейс с меню
+
 #include "Keeper.h"
 #include "Fish.h"
 #include "Bird.h"
@@ -7,8 +9,10 @@
 #include <string>
 
 int main() {
-    Keeper keeper;
+    Keeper keeper;  // СОЗДАЁМ КОНТЕЙНЕР
     int choice;
+    
+    // ОСНОВНОЙ ЦИКЛ МЕНЮ
     do {
         std::cout << "\nMenu:\n";
         std::cout << "1. Add Fish\n";
@@ -22,10 +26,11 @@ int main() {
         std::cout << "0. Exit\n";
         std::cout << "Enter choice: ";
         std::cin >> choice;
-        std::cin.ignore(); // To handle newline after cin
+        std::cin.ignore();  // ОЧИЩАЕМ БУФЕР для getline
 
+        // ОБРАБОТКА ВЫБОРА ПОЛЬЗОВАТЕЛЯ в try-catch
         try {
-            if (choice == 1) {
+            if (choice == 1) {  // ДОБАВИТЬ РЫБУ
                 std::string breed, color, diet_type;
                 std::cout << "Enter breed: ";
                 std::getline(std::cin, breed);
@@ -33,63 +38,69 @@ int main() {
                 std::getline(std::cin, color);
                 std::cout << "Enter diet type: ";
                 std::getline(std::cin, diet_type);
-                keeper.add(new Fish(breed, color, diet_type));
-            } else if (choice == 2) {
+                keeper.add(new Fish(breed, color, diet_type));  // СОЗДАЁМ И ДОБАВЛЯЕМ
+            } 
+            else if (choice == 2) {  // ДОБАВИТЬ ПТИЦУ
                 std::string breed, color, diet, habitat;
-                std::cout << "Enter breed: ";
-                std::getline(std::cin, breed);
-                std::cout << "Enter color: ";
-                std::getline(std::cin, color);
-                std::cout << "Enter diet: ";
-                std::getline(std::cin, diet);
-                std::cout << "Enter habitat: ";
-                std::getline(std::cin, habitat);
+                std::cout << "Enter breed: "; std::getline(std::cin, breed);
+                std::cout << "Enter color: "; std::getline(std::cin, color);
+                std::cout << "Enter diet: "; std::getline(std::cin, diet);
+                std::cout << "Enter habitat: "; std::getline(std::cin, habitat);
                 keeper.add(new Bird(breed, color, diet, habitat));
-            } else if (choice == 3) {
+            } 
+            else if (choice == 3) {  // ДОБАВИТЬ КОШКУ
                 std::string breed, color, owner, nickname;
-                std::cout << "Enter breed: ";
-                std::getline(std::cin, breed);
-                std::cout << "Enter color: ";
-                std::getline(std::cin, color);
-                std::cout << "Enter owner full name: ";
-                std::getline(std::cin, owner);
-                std::cout << "Enter nickname: ";
-                std::getline(std::cin, nickname);
+                std::cout << "Enter breed: "; std::getline(std::cin, breed);
+                std::cout << "Enter color: "; std::getline(std::cin, color);
+                std::cout << "Enter owner full name: "; std::getline(std::cin, owner);
+                std::cout << "Enter nickname: "; std::getline(std::cin, nickname);
                 keeper.add(new Cat(breed, color, owner, nickname));
-            } else if (choice == 4) {
+            } 
+            else if (choice == 4) {  // УДАЛИТЬ
                 int index;
                 std::cout << "Enter index to remove: ";
                 std::cin >> index;
                 keeper.remove(index);
-            } else if (choice == 5) {
+            } 
+            else if (choice == 5) {  // РЕДАКТИРОВАТЬ
                 int index;
                 std::cout << "Enter index to edit: ";
                 std::cin >> index;
                 std::cin.ignore();
                 keeper.edit(index);
-            } else if (choice == 6) {
+            } 
+            else if (choice == 6) {  // ВЫВЕСТИ ВСЕ
                 keeper.printAll();
-            } else if (choice == 7) {
+            } 
+            else if (choice == 7) {  // СОХРАНИТЬ
                 std::string filename;
                 std::cout << "Enter filename to save: ";
                 std::getline(std::cin, filename);
                 keeper.saveToFile(filename);
-            } else if (choice == 8) {
+                std::cout << "Saved successfully!" << std::endl;
+            } 
+            else if (choice == 8) {  // ЗАГРУЗИТЬ
                 std::string filename;
                 std::cout << "Enter filename to load: ";
                 std::getline(std::cin, filename);
                 keeper.loadFromFile(filename);
-            } else if (choice == 0) {
+                std::cout << "Loaded successfully!" << std::endl;
+            } 
+            else if (choice == 0) {
                 std::cout << "Exiting..." << std::endl;
-            } else {
+            } 
+            else {
                 throw MyException("Invalid menu choice.");
             }
-        } catch (const MyException& e) {
+        } 
+        
+        // ЛОВИМ ВСЕ ИСКЛЮЧЕНИЯ
+        catch (const MyException& e) {
             std::cerr << "Exception: " << e.what() << std::endl;
         } catch (const std::exception& e) {
             std::cerr << "Standard exception: " << e.what() << std::endl;
         }
-    } while (choice != 0);
+    } while (choice != 0);  // ПОВТОРЯЕМ, ПОКА НЕ 0
 
-    return 0;
+    return 0;  // ДЕСТРУКТОР Keeper вызовется АВТОМАТИЧЕСКИ
 }

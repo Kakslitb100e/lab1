@@ -1,6 +1,9 @@
 // Cat.cpp
+// РЕАЛИЗАЦИЯ КЛАССА Cat
+
 #include "Cat.h"
 
+// КОНСТРУКТОРЫ, ДЕСТРУКТОР, ОПЕРАТОР - аналогично другим классам
 Cat::Cat() : Animal(), owner_full_name(""), nickname("") {
     std::cout << "Default constructor for Cat called." << std::endl;
 }
@@ -28,38 +31,34 @@ Cat& Cat::operator=(const Cat& other) {
     return *this;
 }
 
+// МЕТОД ВЫВОДА
 void Cat::print() const {
-    std::cout << "Cat: Breed=" << breed << ", Color=" << color << ", Owner=" << owner_full_name << ", Nickname=" << nickname << std::endl;
+    std::cout << "Cat: Breed=" << breed << ", Color=" << color 
+              << ", Owner=" << owner_full_name << ", Nickname=" << nickname << std::endl;
 }
 
+// МЕТОД РЕДАКТИРОВАНИЯ
 void Cat::edit() {
     std::string input;
     std::cout << "Edit Cat. Enter new breed (or empty to skip): ";
     std::getline(std::cin, input);
     if (!input.empty()) breed = input;
+    
     std::cout << "Enter new color (or empty to skip): ";
     std::getline(std::cin, input);
     if (!input.empty()) color = input;
+    
     std::cout << "Enter new owner full name (or empty to skip): ";
     std::getline(std::cin, input);
     if (!input.empty()) owner_full_name = input;
+    
     std::cout << "Enter new nickname (or empty to skip): ";
     std::getline(std::cin, input);
     if (!input.empty()) nickname = input;
 }
 
-std::string Cat::getOwnerFullName() const {
-    return owner_full_name;
-}
-
-void Cat::setOwnerFullName(const std::string& ofn) {
-    owner_full_name = ofn;
-}
-
-std::string Cat::getNickname() const {
-    return nickname;
-}
-
-void Cat::setNickname(const std::string& n) {
-    nickname = n;
-}
+// GET/SET МЕТОДЫ
+std::string Cat::getOwnerFullName() const { return owner_full_name; }
+void Cat::setOwnerFullName(const std::string& ofn) { owner_full_name = ofn; }
+std::string Cat::getNickname() const { return nickname; }
+void Cat::setNickname(const std::string& n) { nickname = n; }
